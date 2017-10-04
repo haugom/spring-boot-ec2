@@ -1,5 +1,6 @@
 package springbootec2;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +15,14 @@ import java.util.Map;
  */
 @RestController
 public class HelloController {
+
+    @Autowired
+    private Repo repo;
+
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public Map<String, Object> hello(@RequestParam(value = "name", defaultValue = "Boxfuse") String name) {
         Map<String, Object> result = new HashMap<>();
-        result.put("greeting", "Hello from version " + Version.CURRENT_VERSION + ", you said -> " + name + "!");
+        result.put("greeting", "Hello from version " + Version.CURRENT_VERSION + ", db time: " + repo.currentTimeInDatabase() + ", you said -> " + name + "!");
         return result;
     }
 }
