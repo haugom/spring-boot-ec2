@@ -5,4 +5,5 @@ package springbootec2;
  */
 public interface Repo {
     String currentTimeInDatabase();
+    String author();
 }

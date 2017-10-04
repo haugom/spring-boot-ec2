@@ -17,6 +17,7 @@ import java.sql.SQLException;
 @Component
 public class RepoImpl implements Repo {
 
+    public static final String SELECT_FIRST_NAME_FROM_PERSONS_LIMIT_1 = "select first_name from persons limit 1";
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -32,13 +33,22 @@ public class RepoImpl implements Repo {
 
     @Override
     public String currentTimeInDatabase() {
+        return getSingleString("select now()");
+    }
+
+    private String getSingleString(String sqlToExecute) {
         final String[] result = {""};
-        jdbcTemplate.query("select now()", new RowCallbackHandler() {
+        jdbcTemplate.query(sqlToExecute, new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet rs) throws SQLException {
                 result[0] = rs.getString(1);
             }
         });
         return result[0];
+    }
+
+    @Override
+    public String author() {
+        return getSingleString(SELECT_FIRST_NAME_FROM_PERSONS_LIMIT_1);
     }
 }

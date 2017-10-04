@@ -1,5 +1,6 @@
 package springbootec2;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,12 @@ public class Springbootec2ApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		System.out.println("dataSource = " + dataSource);
-
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		jdbcTemplate.query("select now()", new RowCallbackHandler() {
+		jdbcTemplate.query(RepoImpl.SELECT_FIRST_NAME_FROM_PERSONS_LIMIT_1, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				System.out.println("rs = " + rs.getString(1));
+				String firstNameInDatabase = rs.getString(1);
+				Assert.assertEquals("axel", firstNameInDatabase);
 			}
 		});
 

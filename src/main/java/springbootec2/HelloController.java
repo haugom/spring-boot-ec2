@@ -22,7 +22,7 @@ public class HelloController {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public Map<String, Object> hello(@RequestParam(value = "name", defaultValue = "Boxfuse") String name) {
         Map<String, Object> result = new HashMap<>();
-        result.put("greeting", "Hello from version " + Version.CURRENT_VERSION + ", db time: " + repo.currentTimeInDatabase() + ", you said -> " + name + "!");
+        result.put("greeting", "Hello from version " + Version.CURRENT_VERSION + ", time: " + repo.currentTimeInDatabase() + ", author: " + repo.author() + ", you said -> " + name + "!");
         return result;
     }
 }
